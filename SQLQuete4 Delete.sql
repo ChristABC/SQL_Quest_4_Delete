@@ -35,15 +35,22 @@ INSERT INTO logs ("user","message") VALUES ('admin','Connects');
 INSERT INTO logs ("user","message") VALUES ('admin','Leaves');
 INSERT INTO logs ("user","message") VALUES ('admin','Create new file');
 
-Sauvegarde de la base de données
+-- Sauvegarde de la base de données
 BACKUP DATABASE SuperMoney TO DISK = 'SuperMoney_Backup.bak';
 
 -- Utilisation de la base de données
 USE SuperMoney;
 
--- Suppression des enregistrements pour l'utilisateur 'hack3r'
-DELETE FROM logs WHERE "user" = 'hack3r';
+-- Début de la transaction
+BEGIN TRANSACTION;
+
+-- Suppression des enregistrements pour l'utilisateur 'h4ck3r'
+DELETE FROM logs WHERE "user" = 'h4ck3r';
 
 -- Suppression des trois premiers logs
 DELETE FROM logs WHERE "id" IN (SELECT TOP 3 "id" FROM logs ORDER BY "id");
+
+-- Validation de la transaction
+COMMIT;
+
 SELECT *FROM logs;
